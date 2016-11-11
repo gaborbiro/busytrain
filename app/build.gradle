@@ -1,0 +1,32 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion project.compileSdkVersion
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        applicationId "com.gaborbiro.busytrain"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode project.versionCode
+        versionName project.versionName
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:appcompat-v7:$project.supportLibraryVersion"
+    compile "com.android.support:design:$project.supportLibraryVersion"
+    testCompile 'junit:junit:4.12'
+    compile 'com.hannesdorfmann.parcelableplease:annotation:1.0.2'
+    apt "com.hannesdorfmann.parcelableplease:processor:1.0.2"
+    compile "com.google.android.gms:play-services-location:$project.googlePlayLibraryVersion"
+    compile project(':filepicker')
+}

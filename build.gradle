@@ -1,0 +1,28 @@
+ext {
+    compileSdkVersion = 23
+    buildToolsVersion = "25"
+    versionCode = 1
+    versionName = "1.0"
+    supportLibraryVersion = "24.2.1"
+    supportLibraryName = "com.android.support:appcompat-v7:$supportLibraryVersion"
+    googlePlayLibraryVersion = '8.4.0'
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

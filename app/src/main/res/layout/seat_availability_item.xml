@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/delete_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/fab_margin"
+        android:tint="@color/colorAccent"
+        android:src="@drawable/ic_highlight_off_black_24dp" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:padding="@dimen/fab_margin"
+        android:layout_toLeftOf="@id/delete_btn"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        tools:text="Seat was available on 10/11/2016 12:01 edrjrfhekjh dfjkh kjh g" />
+
+</RelativeLayout>
