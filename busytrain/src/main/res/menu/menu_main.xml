@@ -17,4 +17,10 @@
         android:orderInCategory="102"
         android:title="@string/import_"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="103"
+        android:title="@string/about"
+        app:showAsAction="never" />
 </menu>

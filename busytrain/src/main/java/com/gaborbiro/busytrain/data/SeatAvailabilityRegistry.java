@@ -6,12 +6,12 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.gaborbiro.busytrain.UserPrefs;
 import com.gaborbiro.busytrain.util.ArrayUtils;
 import com.hannesdorfmann.parcelableplease.annotation.ParcelablePlease;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 

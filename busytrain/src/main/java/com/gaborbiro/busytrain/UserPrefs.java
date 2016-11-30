@@ -1,9 +1,10 @@
-package com.gaborbiro.busytrain.data;
+package com.gaborbiro.busytrain;
 
 import android.content.SharedPreferences;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.gaborbiro.busytrain.data.SeatAvailabilityRegistry;
 import com.gaborbiro.busytrain.util.PrefsUtil;
 
 public class UserPrefs {

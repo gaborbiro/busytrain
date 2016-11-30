@@ -1,6 +1,8 @@
 package com.gaborbiro.busytrain.view;
 
 import android.Manifest;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -21,6 +23,8 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.gaborbiro.busytrain.BuildConfig;
 import com.gaborbiro.busytrain.R;
 import com.gaborbiro.busytrain.data.SeatAvailabilityRegistry;
 import com.gaborbiro.busytrain.location.LocationClient;
@@ -41,7 +45,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private static final long LOCATION_EXPIRY = 5000;
-    private static final long PLACE_EXPIRY = 15000;
+    private static final long PLACE_EXPIRY = 10000;
     private static final int REQUEST_CODE_PERMISSION_FINE_LOCATION = 1;
     private static final int REQUEST_CODE_PERMISSION_WRITE_EXT_STORAGE = 2;
 
@@ -212,15 +216,19 @@ public class MainActivity extends AppCompatActivity {
                 registry.clear();
                 break;
             case R.id.action_import:
-                import_();
+                importBackup();
                 break;
             case R.id.action_export:
                 permissionVerifier = new PermissionVerifier(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE});
                 if (permissionVerifier.verifyPermissions(true,
                         REQUEST_CODE_PERMISSION_WRITE_EXT_STORAGE)) {
-                    export();
+                    exportBackup();
                 }
+                break;
+            case R.id.action_about:
+                String text = BuildConfig.APPLICATION_ID + "\nV" + BuildConfig.VERSION_NAME + "(" + BuildConfig.VERSION_CODE + ")";
+                showDialog(getString(R.string.about), text);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -232,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String BACKUP_FOLDER = "/BusyTrain";
 
-    private void import_() {
+    private void importBackup() {
         Intent i = new Intent(this, FileDialogActivity.class);
         i.putExtra(FileDialogActivity.EXTRA_START_PATH,
                 Environment.getExternalStorageDirectory()
@@ -242,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(i, REQUEST_CODE_SELECT_FILE_FOR_IMPORT);
     }
 
-    private void export() {
+    private void exportBackup() {
         File sd = Environment.getExternalStorageDirectory();
         File targetFolder = new File(sd + BACKUP_FOLDER);
 
@@ -313,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_CODE_PERMISSION_WRITE_EXT_STORAGE:
                 if (permissionVerifier.onRequestPermissionsResult(requestCode, permissions,
                         grantResults)) {
-                    export();
+                    exportBackup();
                 } else {
                     Toast.makeText(this, "You cannot export the database without this permission!", Toast.LENGTH_SHORT)
                             .show();
@@ -323,4 +331,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // End Permissions
+
+    private void showDialog(String title, String text) {
+        new MaterialDialog.Builder(this)
+                .title(title)
+                .content(text)
+                .positiveText(android.R.string.ok)
+                .show();
+    }
 }

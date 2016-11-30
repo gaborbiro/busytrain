@@ -10,6 +10,9 @@ ext {
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://gaborbiro.bintray.com/maven'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'

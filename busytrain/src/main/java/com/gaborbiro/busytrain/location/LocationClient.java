@@ -101,23 +101,26 @@ public class LocationClient {
                             System.out.println("No nearby transit station was found");
                         } else {
                             if (listener != null) {
-                                Place mostLikelyStation = placeLikelihoods.get(0).getPlace();
-                                String name = mostLikelyStation.getName().toString();
-                                List<String> types = new ArrayList<>();
+                                String name = "";
+                                for (PlaceLikelihood placeLikelihood : placeLikelihoods) {
+                                    Place mostLikelyStation = placeLikelihood.getPlace();
+                                    name += "\n" + mostLikelyStation.getName().toString();
+                                    List<String> types = new ArrayList<>();
 
-                                if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_BUS_STATION)) {
-                                    types.add("bus");
+                                    if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_BUS_STATION)) {
+                                        types.add("bus");
+                                    }
+                                    if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_SUBWAY_STATION)) {
+                                        types.add("subway");
+                                    }
+                                    if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_TRAIN_STATION)) {
+                                        types.add("train");
+                                    }
+                                    if (!types.isEmpty()) {
+                                        name += " " + Arrays.toString(types.toArray(new String[types.size()]));
+                                    }
                                 }
-                                if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_SUBWAY_STATION)) {
-                                    types.add("subway");
-                                }
-                                if (mostLikelyStation.getPlaceTypes().contains(Place.TYPE_TRAIN_STATION)) {
-                                    types.add("train");
-                                }
-                                if (!types.isEmpty()) {
-                                    name += " " + Arrays.toString(types.toArray(new String[types.size()]));
-                                }
-                                listener.onNearbyPlaceAvailable(name);
+                                listener.onNearbyPlaceAvailable(name.trim());
                             }
                         }
                         placeLikelihoods.release();
