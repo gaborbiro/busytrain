@@ -20,27 +20,25 @@ android {
             minifyEnabled true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".debug"
         }
         release {
             minifyEnabled true
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".release"
         }
     }
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def date = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())
-            def version = variant.versionName + "(" + variant.versionCode + ")"
-            def apkPostfix = "-" + version + "-" + date + ".apk"
-            output.outputFile = new File(
-                    output.outputFile.parent,
-                    output.outputFile.name.replace(".apk", apkPostfix))
-        }
-    }
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def date = new SimpleDateFormat("yyyyMMdd_HHmm").format(new Date())
+//            def version = variant.versionName + "(" + variant.versionCode + ")"
+//            def apkPostfix = "-" + version + "-" + date + ".apk"
+//            output.outputFile = new File(
+//                    output.outputFile.parent,
+//                    output.outputFile.name.replace(".apk", apkPostfix))
+//        }
+//    }
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -56,4 +54,6 @@ dependencies {
     compile "com.google.android.gms:play-services-location:$project.googlePlayLibraryVersion"
     compile project(':filepicker')
     compile 'com.afollestad.material-dialogs:core:0.9.1.0'
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
 }

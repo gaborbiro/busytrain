@@ -12,10 +12,8 @@ import com.gaborbiro.busytrain.App;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.Map;
 
 @SuppressWarnings({"SameParameterValue", "unused"})
@@ -228,13 +226,5 @@ public class PrefsUtil {
      */
     public static void unregisterOnSharedPreferenceChangeListener(String key) {
         getSecurePreferences().unregisterOnSharedPreferenceChangeListener(key);
-    }
-
-    public static boolean export(OutputStream out) {
-        return getSecurePreferences().export(out);
-    }
-
-    public static boolean import_(InputStream in) {
-        return getSecurePreferences().import_(in);
     }
 }

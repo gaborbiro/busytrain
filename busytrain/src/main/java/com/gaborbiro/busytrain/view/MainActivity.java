@@ -1,8 +1,6 @@
 package com.gaborbiro.busytrain.view;
 
 import android.Manifest;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -26,10 +24,10 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gaborbiro.busytrain.BuildConfig;
 import com.gaborbiro.busytrain.R;
+import com.gaborbiro.busytrain.UserPrefs;
 import com.gaborbiro.busytrain.data.SeatAvailabilityRegistry;
 import com.gaborbiro.busytrain.location.LocationClient;
 import com.gaborbiro.busytrain.location.LocationListener;
-import com.gaborbiro.busytrain.util.PrefsUtil;
 import com.gaborbiro.filepicker.FileDialogActivity;
 import com.gaborbiro.filepicker.PermissionVerifier;
 
@@ -41,6 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.gaborbiro.busytrain.data.SeatAvailability;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(getAdapter(registry.getAll()));
     }
 
-    private ListAdapter getAdapter(SeatAvailabilityRegistry.SeatAvailability[] availabilities) {
+    private ListAdapter getAdapter(SeatAvailability[] availabilities) {
         List<Map<String, Object>> data = new ArrayList<>();
         String KEY_TEXT = "KEY_TEXT";
 
-        for (SeatAvailabilityRegistry.SeatAvailability availability : availabilities) {
+        for (SeatAvailability availability : availabilities) {
             Map<String, Object> item = new HashMap<>();
             item.put(KEY_TEXT, availability.toString());
             data.add(item);
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 view.findViewById(R.id.delete_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final SeatAvailabilityRegistry.SeatAvailability availability = registry.getAll()[position];
+                        final SeatAvailability availability = registry.getAll()[position];
                         registry.remove(availability);
                         Snackbar.make(list, "1 item deleted", Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         permissionVerifier = new PermissionVerifier(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION});
 
         if (permissionVerifier.verifyPermissions(true, REQUEST_CODE_PERMISSION_FINE_LOCATION)) {
-            final SeatAvailabilityRegistry.SeatAvailability availability = registry.create(seatWasAvailable);
+            final SeatAvailability availability = registry.create(seatWasAvailable);
             registry.add(availability);
             Location lastKnownLocation = locationClient.getLastLocation();
 
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 locationClient.requestLocationUpdates(0, new LocationListener() {
 
                     long startTime = System.currentTimeMillis();
-                    SeatAvailabilityRegistry.SeatAvailability pendingAvailability = availability;
+                    SeatAvailability pendingAvailability = availability;
 
                     @Override
                     public void onLocationChanged(Location location) {
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             locationClient.getNearbyPlaces(new LocationClient.NearbyPlacesListener() {
 
                 long startTime = System.currentTimeMillis();
-                SeatAvailabilityRegistry.SeatAvailability pendingAvailability = availability;
+                SeatAvailability pendingAvailability = availability;
 
                 @Override
                 public void onNearbyPlaceAvailable(String name) {
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                         String path =
                                 data.getStringExtra(FileDialogActivity.EXTRA_RESULT_PATH);
                         try {
-                            if (PrefsUtil.import_(new FileInputStream(path))) {
+                            if (UserPrefs.importSeatAvailabilities(new FileInputStream(path))) {
                                 Toast.makeText(this, "Merge success", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(this, "Merge failed. Check logs.", Toast.LENGTH_SHORT).show();
@@ -290,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                     String path =
                             data.getStringExtra(FileDialogActivity.EXTRA_RESULT_PATH);
                     try {
-                        if (PrefsUtil.export(new FileOutputStream(path))) {
+                        if (UserPrefs.exportSeatAvailabilities(new FileOutputStream(path))) {
                             Toast.makeText(this, "Export success", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(this, "Export failed. Check logs.", Toast.LENGTH_SHORT).show();

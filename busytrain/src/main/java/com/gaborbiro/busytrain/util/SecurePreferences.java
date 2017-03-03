@@ -29,11 +29,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import java.io.FileInputStream;
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
@@ -275,11 +277,25 @@ final class SecurePreferences
         }
     }
 
+    private static class PrefEntry {
+        String key;
+        String value;
+
+        public PrefEntry(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+
     boolean export(OutputStream out) {
+        Gson gson = new Gson();
         ObjectOutputStream output = null;
         try {
             output = new ObjectOutputStream(out);
-            output.writeObject(preferences.getAll());
+            for (Map.Entry<String, ?> entry : preferences.getAll().entrySet()) {
+                out.write(gson.toJson(new PrefEntry(entry.getKey(), decrypt((String) entry.getValue()))).getBytes());
+                out.write("\n".getBytes());
+            }
             return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -299,25 +315,29 @@ final class SecurePreferences
     }
 
     boolean import_(InputStream in) {
-        ObjectInputStream input = null;
+        BufferedReader reader = null;
+        Gson gson = new Gson();
         try {
-            input = new ObjectInputStream(in);
+            reader = new BufferedReader(new InputStreamReader(in));
             SharedPreferences.Editor prefEdit = preferences.edit();
-            prefEdit.clear();
-            Map<String, ?> entries = (Map<String, ?>) input.readObject();
-            for (Map.Entry<String, ?> entry : entries.entrySet()) {
-                Object v = entry.getValue();
-                String key = entry.getKey();
-//                if (v instanceof Boolean)
-//                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
-//                else if (v instanceof Float)
-//                    prefEdit.putFloat(key, ((Float) v).floatValue());
-//                else if (v instanceof Integer)
-//                    prefEdit.putInt(key, ((Integer) v).intValue());
-//                else if (v instanceof Long)
-//                    prefEdit.putLong(key, ((Long) v).longValue());
-//                else if (v instanceof String)
+            String line;
+
+            while((line = reader.readLine()) != null) {
+                PrefEntry entry = gson.fromJson(line, PrefEntry.class);
+
+                Object v = encrypt(entry.value, writer);
+                String key = entry.key;
+                if (v instanceof String) {
                     prefEdit.putString(key, ((String) v));
+                } else if (v instanceof Float) {
+                    prefEdit.putFloat(key, ((Float) v).floatValue());
+                } else if (v instanceof Integer) {
+                    prefEdit.putInt(key, ((Integer) v).intValue());
+                } else if (v instanceof Long) {
+                    prefEdit.putLong(key, ((Long) v).longValue());
+                } else if (v instanceof Boolean) {
+                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+                }
             }
             prefEdit.commit();
             return true;
@@ -325,12 +345,10 @@ final class SecurePreferences
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } finally {
             try {
-                if (input != null) {
-                    input.close();
+                if (reader != null) {
+                    reader.close();
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
