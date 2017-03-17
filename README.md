@@ -73,12 +73,12 @@ We also use an Android Studio plugin to push up new strings to PhraseApp and to 
 https://deliveroo.atlassian.net/wiki/display/QA/Charles+Proxy
 
 Usefull hosts to track with Charles:
-- ***crashlytics***
-- ***herokuapp.com
-- ***instabug***
-- ***maps.googleapis.com
-- ***newrelic***
-- ***zendesk***
+- **crashlytics**
+- **herokuapp.com
+- **instabug**
+- **maps.googleapis.com
+- **newrelic**
+- **zendesk**
 
 ## Other usefull links:
 
