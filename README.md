@@ -68,6 +68,18 @@ We use PhraseApp to store our strings and ask for translations: https://phraseap
 
 We also use an Android Studio plugin to push up new strings to PhraseApp and to pull down new translations: just go to the Plugins section in Android Studio and search for 'PhraseApp'.
 
+## Working with Charles to capture outgoing/incoming packets and fake server api error responses
+
+https://deliveroo.atlassian.net/wiki/display/QA/Charles+Proxy
+
+Usefull hosts to track with Charles:
+    - *crashlytics*
+    - *herokuapp.com
+    - *instabug*
+    - *maps.googleapis.com
+    - *newrelic*
+    - *zendesk*
+
 ## Other usefull links:
 
 Firebase (Analytics): [Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview) and [Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
