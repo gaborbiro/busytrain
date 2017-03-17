@@ -43,6 +43,7 @@ The passwords for the keystore and the keys are in the gradle.properties file, a
 ## Continuous integration
 
 We are currently using BuddyBuild to generate, sign and deploy our builds: https://dashboard.buddybuild.com/apps/58adbc0171e59b0100088e34
+
 Upon every pull request to any branch or push to the staging or deploy branches, BuddyBuild automatically kicks in, builds the code and runs all tests. It relies on two shell script files to do additional operations: buddybuild_postclone.sh and buddybuild_postbuild.sh (commited to git). 
 
 The apk's are uploaded to fabric:
@@ -66,5 +67,6 @@ We also use an Android Studio plugin to push up new strings to PhraseApp and to 
 ## Other usefull links:
 
 ###Firebase
-  Staging: https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview
-  Production: https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview
+
+[Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview)
+[Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
