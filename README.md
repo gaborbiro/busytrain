@@ -46,27 +46,18 @@ We are currently using BuddyBuild to generate, sign and deploy our builds: https
 
 Upon every pull request to any branch or push to the staging or deploy branches, BuddyBuild automatically kicks in, builds the code and runs all tests. It relies on two shell script files to do additional operations: buddybuild_postclone.sh and buddybuild_postbuild.sh (commited to git). 
 
-The apk's are uploaded to fabric:
+The apk's are uploaded to fabric: [Staging](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp.test) and [Production](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp)
 
-[Staging](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp.test)
-
-[Production](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp)
-
-They are also uploaded to our amazon S3 bucket:
-
-[Staging](https://test.deliveroo.co.uk/admin/app_packages)
-
-[Production](https://deliveroo.co.uk/admin/app_packages)
+They are also uploaded to our amazon S3 bucket: [Staging](https://test.deliveroo.co.uk/admin/app_packages) and [Production](https://deliveroo.co.uk/admin/app_packages)
 
 ## String translations
 
 We use PhraseApp to store our strings and ask for translations: https://phraseapp.com/accounts/deliveroo/projects/driver/overview
 
-We also use an Android Studio plugin to push up new strings to PhraseApp and to pull down new translations: just go to the Plugins section in Android Studio and search for PhraseApp.
+We also use an Android Studio plugin to push up new strings to PhraseApp and to pull down new translations: just go to the Plugins section in Android Studio and search for 'PhraseApp'.
 
 ## Other usefull links:
 
-###Firebase
+Firebase (Analytics): [Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview) and [Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
 
-[Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview)
-[Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
+[Zeplin (UI design resources)](https://app.zeplin.io/project.html#pid=57cd76a724cb361f7b15bfb7)
