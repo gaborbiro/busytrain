@@ -84,6 +84,4 @@ Usefull hosts to track with Charles:
 
 Firebase (Analytics): [Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview) and [Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
 
-[Zeplin (UI design resources)](https://app.zeplin.io/project.html#pid=57cd76a724cb361f7b15bfb7)
-
 Our users can leave in-app feedback. See them [here](https://dashboard.instabug.com/applications/deliveroocouk-f15ef8fa-6db7-49d4-93ef-fb2d0e4bd561)
