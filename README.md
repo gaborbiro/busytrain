@@ -40,15 +40,21 @@ and for the production environment:
 The keystore used to sign the application is in the dev.jks file, commited to git.
 The passwords for the keystore and the keys are in the gradle.properties file, also commited to git
 
+BuddyBuild uses it's own copy of the keystore file, not the one in git.
+
 ## Continuous integration
 
 We are currently using BuddyBuild to generate, sign and deploy our builds: https://dashboard.buddybuild.com/apps/58adbc0171e59b0100088e34
 
-Upon every pull request to any branch or push to the staging or deploy branches, BuddyBuild automatically kicks in, builds the code and runs all tests. It relies on two shell script files to do additional operations: buddybuild_postclone.sh and buddybuild_postbuild.sh (commited to git). 
+Upon every pull request to any branch or push to the staging or deploy branches, BuddyBuild automatically kicks in, builds the code, runs all tests and deploys the apk's. It relies on two shell script files to do the deployments: buddybuild_postclone.sh and buddybuild_postbuild.sh (commited to git). 
 
-The apk's are uploaded to fabric: [Staging](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp.test) and [Production](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp)
+The apk's are deployed to fabric: [Staging](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp.test) and [Production](https://fabric.io/deliveroo2/android/apps/com.deliveroo.driverapp)
 
-They are also uploaded to our amazon S3 bucket: [Staging](https://test.deliveroo.co.uk/admin/app_packages) and [Production](https://deliveroo.co.uk/admin/app_packages)
+They are also deployed to our amazon S3 bucket: [Staging](https://test.deliveroo.co.uk/admin/app_packages) and [Production](https://deliveroo.co.uk/admin/app_packages)
+
+After the build in the amazon bucket has been tested, someone will flip the switch on it and go live. We have the option of hard update (riders are blocked from using the app until they update) and soft update (riders can check for updates).
+
+We do not currently deploy to any app stores.
 
 ## Working with git
 
@@ -67,3 +73,5 @@ We also use an Android Studio plugin to push up new strings to PhraseApp and to 
 Firebase (Analytics): [Staging](https://console.firebase.google.com/project/riderapp-test/analytics/app/android:com.deliveroo.driverapp.test/overview) and [Production](https://console.firebase.google.com/project/riderapp-production/analytics/app/android:com.deliveroo.driverapp/overview)
 
 [Zeplin (UI design resources)](https://app.zeplin.io/project.html#pid=57cd76a724cb361f7b15bfb7)
+
+Our users can leave in-app feedback. See them [here](https://dashboard.instabug.com/applications/deliveroocouk-f15ef8fa-6db7-49d4-93ef-fb2d0e4bd561)
