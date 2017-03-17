@@ -50,6 +50,12 @@ The apk's are uploaded to fabric: [Staging](https://fabric.io/deliveroo2/android
 
 They are also uploaded to our amazon S3 bucket: [Staging](https://test.deliveroo.co.uk/admin/app_packages) and [Production](https://deliveroo.co.uk/admin/app_packages)
 
+## Working with git
+
+http://deliveroo.engineering/guidelines/git/
+
+Our main development branch is "staging" (not master), this is the one you should always be checking out.
+
 ## String translations
 
 We use PhraseApp to store our strings and ask for translations: https://phraseapp.com/accounts/deliveroo/projects/driver/overview
