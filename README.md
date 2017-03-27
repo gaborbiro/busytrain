@@ -1,8 +1,6 @@
 # Deliveroo / Rider App
 
-staging: [![BuddyBuild staging](https://dashboard.buddybuild.com/api/statusImage?appID=58adbc0171e59b0100088e34&branch=staging&build=latest)](https://dashboard.buddybuild.com/apps/58adbc0171e59b0100088e34/build/latest?branch=staging)
-
-deploy: [![BuddyBuild deploy](https://dashboard.buddybuild.com/api/statusImage?appID=58adbc0171e59b0100088e34&branch=deploy&build=latest)](https://dashboard.buddybuild.com/apps/58adbc0171e59b0100088e34/build/latest?branch=deploy)
+[![BuddyBuild staging](https://dashboard.buddybuild.com/api/statusImage?appID=58adbc0171e59b0100088e34&branch=staging&build=latest)](https://dashboard.buddybuild.com/apps/58adbc0171e59b0100088e34/build/latest?branch=staging)
 
 ## Building and releasing
 
